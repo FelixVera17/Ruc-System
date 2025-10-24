@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+{% block title %}
+
+rucs viewer
+{% endblock %}
+
+{% block content %}
+
+
+<h1>Welcome to The Ruc System</h1>
+
+<h2>Recent Upload History</h2>
+
+{% if upload_history %}
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Archive</th>
+                <th>Upload date</th>
+                <th>Uploaded records</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for charge in upload_history %}
+                <tr>
+                    <td>{{ chargecarga.name_arc }}</td>
+                    <td>{{ charge.fecha_carga|date:"d/m/Y H:i" }}</td>
+                    <td>{{ charge.registros }}</td>
+                    <td>
+                        <a href="{% url 'core:visualize_ruc' %}">View RUC</a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% else %}
+    <p>Theres nothing available.</p>
+{% endif %}
+
+
+
+<div  style="float: left; width:65%; font-size: 1.2em;">
+    <tr>
+        <td align = "right">
+            <a style="margin-top:5px; padding:4px 5px; background:#00a133" href="{% url 'core:upload_ruc' %}" class="btn btn-xs btn-default" role="button"><i class="fa fa-address-card"  aria-hidden="true"></i> Go to upload file</a>
+        </td>
+    </tr>
+</div>
+{% endblock %}

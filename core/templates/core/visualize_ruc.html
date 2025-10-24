@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h2>List of RUC - first 50 records </h2>
+    <a href="{% url 'core:sort_ruc_timsort' %}" class="btn btn-secondary">Sort by timsort</a>
+    <a href="{% url 'core:sort_quicksort' %}" class="btn btn-secondary">Sort by quicksort</a>
+    <form method="POST" action="{% url 'core:visualize_ruc' %}">
+        {% csrf_token %}
+        <button type="submit" name="accion" class="btn btn-sm btn-danger" value="PDF">
+            <span class="fa fa-file-pdf-o" aria-hidden="true"></span> <strong>PDF</strong>
+        </button>
+    </form>
+    {% if ruc_data %}
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Document</th>
+                    <th>Name</th>
+                    <th>code</th>
+                    <th>key</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for ruc in ruc_data %}
+                    <tr>
+                        <td>{{ ruc.id }}</td>
+                        <td>{{ ruc.document }}</td>
+                        <td>{{ ruc.name }}</td>
+                        <td>{{ ruc.code }}</td>
+                        <td>{{ ruc.key }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+            <a href="{{request.META.HTTP_REFERER}}" class="btn btn-primary">start</a>
+
+    {% else %}
+        <p>Theres nothing available.</p>
+    {% endif %}
+{% endblock %}
